@@ -1,0 +1,21 @@
+.panelGridNoBorderNoTr{
+	width: 100%;
+}
+
+.panelGridNoBorder td{
+	border-style: none !important;	
+}
+
+.panelGridNoBorderNoTr tr {
+	
+	border:none;
+}
+
+.panelGridNoBorderNoTr td.ui-panelgrid-cell {
+	
+	border:none;
+}
+
+.panelGridNoBorderTr tr{
+	border: none;
+}

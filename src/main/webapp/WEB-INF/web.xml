@@ -94,4 +94,9 @@
 	    <exception-type>javax.faces.application.ViewExpiredException</exception-type>
 	    <location>/pages/login.xhtml</location>
 	</error-page>
+	
+	<context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>ui-lightness</param-value>
+	</context-param>
 </web-app>

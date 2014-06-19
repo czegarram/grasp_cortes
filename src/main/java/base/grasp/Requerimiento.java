@@ -1,5 +1,7 @@
 package base.grasp;
 
+import java.io.Serializable;
+
 /**
  * @(#)Requerimiento.java
  *
@@ -9,7 +11,11 @@ package base.grasp;
  */
 
 
-public class Requerimiento {
+public class Requerimiento implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int tamanio;
 	private int cant;
 	
@@ -18,6 +24,8 @@ public class Requerimiento {
     	cant = c;
     }
     public Requerimiento(){ 
+    	tamanio=0;
+    	cant=0;
     }
     
     public int getTam(){
@@ -31,5 +39,35 @@ public class Requerimiento {
     }
     public void setCant(int c){
     	cant = c;
-    }
+    }   
+    
+	public int getTamanio() {
+		return tamanio;
+	}
+	public void setTamanio(int tamanio) {
+		this.tamanio = tamanio;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + tamanio;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Requerimiento other = (Requerimiento) obj;
+		if (tamanio != other.tamanio)
+			return false;
+		return true;
+	}
+    
+    
 }

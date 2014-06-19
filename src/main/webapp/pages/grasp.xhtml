@@ -10,13 +10,121 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <h:head>
-
+	<h:outputStylesheet library="css" name="style.css"  />
 </h:head>
 
-<h:body>  
-   	<h:form id="LOL">
-   		<p:outputLabel value="#{demoBean.i}"></p:outputLabel>	
-     </h:form>    
+<h:body>
+	<h:form id="form">
+		<p:growl id="msgs" />
+	
+		<p:panel header="Parametros" rendered="#{demoBean.step==0}">
+			<p:panelGrid id="pnl_param" styleClass="panelGridNoBorderNoTr">
+				
+				<p:row>
+					<p:column >						
+						<p:outputLabel for="input_tamCont" value="Tamaño Contenedor: " />
+					</p:column>				
+					
+					<p:column>
+						<p:inputText id="input_tamCont" value="#{demoBean.tamanioContenedor}" required="true"  />
+		        		<p:slider for="input_tamCont" />
+	        		</p:column>
+	        		
+	        		<p:column >						
+						<p:outputLabel for="input_factor" value="Coeficiente: "  />
+					</p:column>
+					
+					<p:column>
+						<pe:inputNumber id="input_factor" value="#{demoBean.factor}" required="true" decimalSeparator="," decimalPlaces="1" maxValue="1" minValue="0"/>
+	        		</p:column>
+	        		
+	        		<p:column >						
+						<p:outputLabel for="input_iteraciones" value="nº iteraciones: "  />
+					</p:column>
+					
+					<p:column>
+						<pe:inputNumber id="input_iteraciones" value="#{demoBean.iteraciones}" required="true" decimalPlaces="0"/>
+	        		</p:column>
+        		</p:row>
+        	</p:panelGrid>
+        </p:panel>
+		
+		<p:panel header="Agregar Nuevo Requerimiento" style="margin-bottom:20px" rendered="#{demoBean.step==0}">
+			<p:panelGrid id="pnl" styleClass="panelGridNoBorderNoTr">
+				
+				<p:row>
+					<p:column >						
+						<p:outputLabel for="input_tam" value="Tamaño: " />
+					</p:column>				
+					
+					<p:column>
+						<p:inputText id="input_tam" value="#{demoBean.requerimiento.tamanio}" required="true"  />
+		        		<p:slider for="input_tam" />
+	        		</p:column>
+	        		
+	        		<p:column >						
+						<p:outputLabel for="input_cant" value="Cantidad: "  />
+					</p:column>
+					
+					<p:column>
+						<p:inputText id="input_cant" value="#{demoBean.requerimiento.cant}" required="true"/>
+		        		<p:slider for="input_cant" />
+	        		</p:column>
+        		</p:row>
+				
+        		<p:row >
+        			<p:column colspan="4" style="text-align:center;">
+						<p:commandButton id="btn_add" value="Add" process="@this,pnl"
+							update="requerimientos msgs @parent" action="#{demoBean.reinit}">
+							<p:collector value="#{demoBean.requerimiento}"
+								addTo="#{demoBean.requerimientos}" unique="true" />
+						</p:commandButton>
+
+						<p:commandButton id="btn_resolver" value="Resolver" process="@this,@form"
+							update="@form" ajax="true" actionListener="#{demoBean.resolver}" />
+						<p:commandButton id="btn_limpiar" value="Limpiar" process="@this"
+							update="@form" ajax="true" actionListener="#{demoBean.limpiarFormulario}" />
+
+
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</p:panel>
+
+		<p:outputPanel id="requerimientos" style="width:90%;margin:auto;" rendered="#{demoBean.step==0}">
+			<p:dataTable value="#{demoBean.requerimientos}" var="req" scrollable="true" scrollHeight="250"
+				id="requerimientosTable">
+
+				<p:column headerText="Tamaño">
+					<h:outputText value="#{req.tamanio}" />
+				</p:column>
+
+				<p:column headerText="Cantidad">
+					<f:facet name="header">
+						<h:outputText value="Cantidad" />
+					</f:facet>
+					<h:outputText value="#{req.cant}" />
+				</p:column>
+
+				<p:column headerText="Action">
+					<p:commandLink value="Remove" update=":form:requerimientos"
+						process=":form:requerimientos">
+						<p:collector value="#{req}" removeFrom="#{demoBean.requerimientos}"
+							unique="true" />
+					</p:commandLink>
+				</p:column>
+
+			</p:dataTable>
+		</p:outputPanel>
+		
+		<p:panel rendered="#{demoBean.step==1}">
+			<p:commandButton id="btn_atras" process="@this" actionListener="#{demoBean.irAlPrimerStep}" update="@form" value="Atras"></p:commandButton>
+			<br/>
+			<p:inputTextarea rows="20" cols="50" value="#{demoBean.resultado}" readonly="true"/>
+		
+		</p:panel>
+		
+	</h:form>
 </h:body>
 
 </html>

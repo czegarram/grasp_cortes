@@ -4,6 +4,11 @@ public abstract class SolverBinPacking{
    protected LecturaDatos datos;
    private long tiempoEjecucion;
 
+   public SolverBinPacking(){
+	   
+   }
+   
+   
    public SolverBinPacking(LecturaDatos datos){
       this.datos = datos;
    }
@@ -76,7 +81,7 @@ public abstract class SolverBinPacking{
       }
       return suma;
    }
-   public void imprimirResultados(){
+   public String imprimirResultados(){
       System.out.println("Tiempo ejecucion: " + getTiempoEjecucion() + " milisegundos");
       System.out.println("Numero de contenedores: " + getNumeroContenedores());
       System.out.println("Cortes por contenedor: ");
@@ -99,5 +104,6 @@ public abstract class SolverBinPacking{
       int residuoReal = getResiduoReal();
       System.out.printf("Residuo real: %d (%.2f%% de un contenedor)\n", residuoReal, 100*(double)residuoReal/datos.getContenedor());
       System.out.printf("Porcentaje de uso real: %.2f%%\n", 100*(1-(double)residuoReal/(getNumeroContenedores()*datos.getContenedor())));
+      return "";
    }
 }
