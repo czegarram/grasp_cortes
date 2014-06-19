@@ -15,7 +15,7 @@
 
 <h:body>
 	<h:form id="form">
-		<p:growl id="msgs" />
+		<p:growl id="msgs" showDetail="true" />
 	
 		<p:panel header="Parametros" rendered="#{demoBean.step==0}">
 			<p:panelGrid id="pnl_param" styleClass="panelGridNoBorderNoTr">
@@ -118,10 +118,71 @@
 		</p:outputPanel>
 		
 		<p:panel rendered="#{demoBean.step==1}">
-			<p:commandButton id="btn_atras" process="@this" actionListener="#{demoBean.irAlPrimerStep}" update="@form" value="Atras"></p:commandButton>
-			<br/>
-			<p:inputTextarea rows="20" cols="50" value="#{demoBean.resultado}" readonly="true"/>
 		
+			<p:commandButton id="btn_atras" process="@this" actionListener="#{demoBean.irAlPrimerStep}" update="@form" value="Atras">
+			</p:commandButton>
+			<br/>
+		
+			<p:outputLabel value="Tiempo de Ejecucion: " for="input_ejecucion" style="font-weight: bold;"></p:outputLabel>
+			<p:inputText id="input_ejecucion" readonly="true" value="#{demoBean.data.tiempoEjecucion} ms" ></p:inputText>
+			
+			<p:outputLabel for="input_nroCont" value="Nro Total de Contenedores: " style="font-weight: bold;"></p:outputLabel>
+			<p:inputText id="input_nroCont" readonly="true" value="#{demoBean.data.numeroContenedores}" ></p:inputText>
+			
+			<p:outputLabel for="view_tamCont" value="Tamaño de Contenedor: " style="font-weight: bold;"></p:outputLabel>
+			<p:inputText id="view_tamCont" readonly="true" value="#{demoBean.data.tamMax}" ></p:inputText>
+			
+			
+			<p:chart type="bar" model="#{demoBean.horizontalContenedoresBarModel}" style="height:300px" />
+			
+			<br/>
+			<p:dataTable id="dt_residuos" value="#{demoBean.residuos}" var="r" sortBy="#{r.iteracion}"  sortOrder="descending">
+				<f:facet name="header">
+				Residuos de los contenedores
+				</f:facet>
+				
+				<p:column headerText="Contenedor">
+					<p:outputLabel value="#{r.iteracion}">
+						<f:convertNumber pattern="#0" />
+					</p:outputLabel> 
+				</p:column>
+				
+				<p:column headerText="Residuo">
+					<p:outputLabel value="#{r.valor}">
+						<f:convertNumber pattern="#0" />
+					</p:outputLabel> 
+										
+				</p:column>
+				
+				<p:column headerText="Porcentaje de Uso">
+					<p:outputLabel value="#{r.porcentaje}" >
+						<f:convertNumber pattern="#0.00" />
+					</p:outputLabel> %
+				</p:column>
+
+			
+			</p:dataTable>
+			
+			<br />
+			<p:outputLabel value="Residuo Total: " for="input_residuoTotal" style="font-weight: bold;"></p:outputLabel>
+			<p:inputText id="input_residuoTotal" readonly="true" value="#{demoBean.data.residuoTotal}" ></p:inputText>
+			
+			<p:outputLabel value="Residuo Real: " for="input_residuoReal" style="font-weight: bold;"></p:outputLabel>
+			<p:inputText id="input_residuoReal" readonly="true" value="#{demoBean.data.residuoReal.valor}" >
+				<f:convertNumber pattern="#0" />
+			</p:inputText>
+			(
+			<p:outputLabel value="#{demoBean.data.residuoReal.porcentaje}">
+				<f:convertNumber pattern="#0.00" />
+			</p:outputLabel>
+			 % de un contenedor)
+			
+			<p:outputLabel value="Porcentaje de uso Real: " for="input_porcentajeUsoReal" style="font-weight: bold;"></p:outputLabel>
+			<p:inputText id="input_porcentajeUsoReal" readonly="true" value="#{demoBean.data.porcentajeUsoReal}" >
+				<f:convertNumber pattern="#0.00" />
+			</p:inputText>
+			
+			
 		</p:panel>
 		
 	</h:form>

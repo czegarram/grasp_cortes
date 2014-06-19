@@ -2,8 +2,11 @@ package base.grasp;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 /**
  * @(#)GRASP.java
  *
@@ -32,6 +35,8 @@ public class SolverBinPackingGRASP extends SolverBinPacking {
 	private int m;
 	private int nReq;
 	private int num_rcl;
+	
+	private Resultado resultado;
 
 	public SolverBinPackingGRASP(LecturaDatos datos, double a, int ni) {
 		super(datos);
@@ -61,7 +66,7 @@ public class SolverBinPackingGRASP extends SolverBinPacking {
 	 * @param ni
 	 *            : numeros de iteraciones
 	 * @param tamanioContenedor
-	 *            : tamaño del contenedor
+	 *            : tamaï¿½o del contenedor
 	 */
 	public SolverBinPackingGRASP(List<Requerimiento> reqs, double a, int ni,
 			int tamanioContenedor) {
@@ -296,4 +301,73 @@ public class SolverBinPackingGRASP extends SolverBinPacking {
 		// Show what happened
 		return baos.toString();
 	}
+	
+	
+	public void generarResultado(){
+		resultado = new Resultado();
+		
+
+		resultado.setTiempoEjecucion(getTiempoEjecucion());
+		resultado.setNumeroContenedores(getNumeroContenedores());
+
+		
+		Map<Integer,List<Integer>> map = new HashMap <Integer,List<Integer>>();
+		int cortes[][] = getCortes();
+		for (int i = 0; i < cortes.length; i++) {
+			List<Integer> list = new ArrayList<Integer>();
+
+			for (int j = 0; j < cortes[i].length; j++) {
+
+				list.add(cortes[i][j]);
+			}
+
+			map.put(i+1, list);
+		}
+		resultado.setCortes(map);
+		
+		Map<Integer,Residuo> residuos_map = new HashMap<Integer,Residuo>();
+
+		int residuos[] = getResiduosIndividuales();
+		for (int i = 0; i < residuos.length; i++) {
+			double nroIteracion = i + 1;
+			double valor = residuos[i];
+			double porcentaje = 100 * (1 - (double) residuos[i] / L);
+
+			Residuo r = new Residuo();
+			r.setPorcentaje(porcentaje);
+			r.setValor(valor);
+			residuos_map.put((int)nroIteracion, r);
+		}
+		resultado.setResiduos(residuos_map);
+		
+		int residuoTotal = getResiduoTotal();
+
+		resultado.setResiduoTotal(residuoTotal);
+		
+		int residuoReal = getResiduoReal();
+		double porcentajeResiduoReal = 100 * (double) residuoReal / L;
+
+		Residuo r = new Residuo();
+		r.setValor(residuoReal);
+		r.setPorcentaje(porcentajeResiduoReal);
+		
+		resultado.setResiduoReal(r);		
+		
+		double porcentajeUsoReal = 100 * (1 - (double) residuoReal
+				/ (getNumeroContenedores() * L));
+
+		
+		resultado.setPorcentajeUsoReal(porcentajeUsoReal);
+		resultado.setTamMax(L);
+
+	}
+
+	public Resultado getResultado() {
+		return resultado;
+	}
+
+	public void setResultado(Resultado resultado) {
+		this.resultado = resultado;
+	}
+	
 }
