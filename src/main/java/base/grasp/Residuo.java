@@ -24,6 +24,22 @@ public class Residuo {
 		this.iteracion = iteracion;
 	}
 	
+	public boolean esLaPrimeraIteracion(){
+		Double d = new Double(iteracion);
+		int val = d.intValue();
+		if(val==1)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean porcentajeEsMenorA100(){
+		if(porcentaje<100.0d)
+			return true;
+		else
+			return false;		
+	}
+	
 	@Override
 	public String toString() {
 		return "Residuo [valor=" + valor + ", porcentaje=" + porcentaje + "]";
