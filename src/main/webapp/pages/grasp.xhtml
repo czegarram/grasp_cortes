@@ -31,7 +31,7 @@
 	        		</p:column>
 	        		
 	        		<p:column >						
-						<p:outputLabel for="input_factor" value="Coeficiente: "  />
+						<p:outputLabel for="input_factor" value="Coeficiente de Relajación: "  />
 					</p:column>
 					
 					<p:column>
@@ -74,7 +74,7 @@
 				
         		<p:row >
         			<p:column colspan="4" style="text-align:center;">
-						<p:commandButton id="btn_add" value="Add" process="@this,pnl"
+						<p:commandButton id="btn_add" value="Agregar" process="@this,pnl"
 							update="requerimientos msgs @parent" action="#{demoBean.reinit}">
 							<p:collector value="#{demoBean.requerimiento}"
 								addTo="#{demoBean.requerimientos}" unique="true" />
@@ -106,8 +106,8 @@
 					<h:outputText value="#{req.cant}" />
 				</p:column>
 
-				<p:column headerText="Action">
-					<p:commandLink value="Remove" update=":form:requerimientos"
+				<p:column headerText="Operacion">
+					<p:commandLink value="Eliminar" update=":form:requerimientos"
 						process=":form:requerimientos">
 						<p:collector value="#{req}" removeFrom="#{demoBean.requerimientos}"
 							unique="true" />

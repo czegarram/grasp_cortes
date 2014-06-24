@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class SolverBinPackingGRASP extends SolverBinPacking {
-	private final int ARRAY_SIZE = 2000;
+	private final int ARRAY_SIZE = 6000;
 	private double alfa;
 	private int nIter;
 
