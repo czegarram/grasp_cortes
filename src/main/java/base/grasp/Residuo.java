@@ -4,6 +4,7 @@ public class Residuo {
 	private double iteracion;
 	private double valor;
 	private double porcentaje;
+	private int nuevoAtributo;
 	
 	public double getValor() {
 		return valor;
@@ -24,6 +25,12 @@ public class Residuo {
 		this.iteracion = iteracion;
 	}
 	
+	public int getNuevoAtributo() {
+		return nuevoAtributo;
+	}
+	public void setNuevoAtributo(int nuevoAtributo) {
+		this.nuevoAtributo = nuevoAtributo;
+	}
 	public boolean esLaPrimeraIteracion(){
 		Double d = new Double(iteracion);
 		int val = d.intValue();
